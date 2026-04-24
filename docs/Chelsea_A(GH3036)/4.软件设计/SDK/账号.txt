@@ -1,2 +1,0 @@
-gh3036-test-sdk
-password : GHealth.123
