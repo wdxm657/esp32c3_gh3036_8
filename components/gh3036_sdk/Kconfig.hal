@@ -1,0 +1,213 @@
+menu "HAL (gh_hal) configuration"
+
+
+config GH_USE_SDK_APP 
+	bool "Use SDK app (GH_USE_SDK_APP)"
+	default y
+
+  
+config GH_ISR_MODE 
+	int "ISR mode (GH_ISR_MODE)"
+    range 0 1
+	default 0
+    help
+        0: ISR mode
+        1: Polling mode
+
+config GH_INTERFACE_TYPE 
+	int "Interface type (GH_INTERFACE_TYPE)"
+    range 0 2
+	default 1
+    help
+        0: I2C interface
+        1: SPI soft cs interface
+        2: SPI hard cs interface
+
+config GH_FIFO_BUFFER_EXTRA_LEN 
+	int "FIFO buffer extra len (GH_FIFO_BUFFER_EXTRA_LEN)"
+    range 0 1
+	default 1 if GH_INTERFACE_TYPE = 2
+	default 0
+    help
+        0: No extra len
+        1: Extra len for SPI hard cs interface
+
+config GH_I2C_DEVICE_ID_SEL 
+	int "I2C device ID select (GH_I2C_DEVICE_ID_SEL)"
+    range 0 4
+	default 0
+	depends on GH_INTERFACE_TYPE = 0
+    help
+        0: GH_I2C_ID_SEL_1L0L
+        1: GH_I2C_ID_SEL_1L0H
+        2: GH_I2C_ID_SEL_1H0L
+        3: GH_I2C_ID_SEL_1H0H
+        4: GH_I2C_ID_INVALID
+
+config GH_FIFO_READ_BUFFER_SIZE 
+	int "FIFO read buffer size (GH_FIFO_READ_BUFFER_SIZE)"
+    range 0 256
+	default 255
+    help
+        Size of FIFO read buffer in samples, 4 bytes per sample.
+
+config GH_FIFO_DATA_BULK_LEN 
+    int "FIFO data bulk length (GH_FIFO_DATA_BULK_LEN)"
+    range 0 256
+    default 1
+    help
+        Number of samples to read in one bulk read from FIFO.
+
+config GH_USE_HAL_COMMON_LIB
+	bool "Use HAL common lib (GH_USE_HAL_COMMON_LIB)"
+	default y if GH_USE_SDK_APP = y
+	default n
+
+config GH_USE_STD_SNPRINTF
+	bool "Use standard snprintf (GH_USE_STD_SNPRINTF)"
+	default y
+
+config GH_SUPPORT_HARD_RESET
+	bool "Support hard reset (GH_SUPPORT_HARD_RESET)"
+	default y
+
+config GH_SUPPORT_SOFT_AGC
+	bool "Support soft AGC (GH_SUPPORT_SOFT_AGC)"
+	default y
+
+config GH_HAL_AGC_DRE_EN
+	bool "Enable HAL AGC DRE (GH_HAL_AGC_DRE_EN)"
+	default n
+	depends on GH_SUPPORT_SOFT_AGC
+
+config GH_SUPPORT_FIFO_CTRL_CAP
+	bool "Support FIFO ctrl CAP (GH_SUPPORT_FIFO_CTRL_CAP)"
+	default n
+
+config GH_SUPPORT_FIFO_CTRL_DEBUG0
+	bool "Support FIFO ctrl DEBUG0 (GH_SUPPORT_FIFO_CTRL_DEBUG0)"
+	default n
+
+config GH_SUPPORT_FIFO_CTRL_DEBUG1
+	bool "Support FIFO ctrl DEBUG1 (GH_SUPPORT_FIFO_CTRL_DEBUG1)"
+	default n
+
+config GH_SUPPORT_FIFO_CTRL_DRE_DC_INFO
+	bool "Support FIFO ctrl DRE DC INFO (GH_SUPPORT_FIFO_CTRL_DRE_DC_INFO)"
+	default n
+
+config GH_HAL_STD_CALI_EN
+	bool "Enable HAL standard calibration (GH_HAL_STD_CALI_EN)"
+	default n
+
+config GH_HAL_STD_CALI_DRV_EN
+	bool "Enable HAL std cali driver stage (GH_HAL_STD_CALI_DRV_EN)"
+	default n
+	depends on GH_HAL_STD_CALI_EN
+
+config GH_HAL_STD_CALI_DC_CANCEL_EN
+	bool "Enable HAL std cali DC cancel (GH_HAL_STD_CALI_DC_CANCEL_EN)"
+	default n
+	depends on GH_HAL_STD_CALI_EN
+
+config GH_FIFO_USE_WATERMARK_LIMIT
+	bool "Use FIFO watermark limit (GH_FIFO_USE_WATERMARK_LIMIT)"
+	default n
+
+config GH_PARAM_BACKUP_EN
+	bool "Enable parameter backup (GH_PARAM_BACKUP_EN)"
+	default n
+
+config GH_PARAM_SYNC_UPDATE_EN
+	bool "Enable parameter sync update (GH_PARAM_SYNC_UPDATE_EN)"
+	default n
+
+
+
+config GH_LOG_DEBUG_ENABLE
+	bool "Enable HAL debug logging (GH_LOG_DEBUG_ENABLE)"
+	default n
+
+choice
+	prompt "HAL log level (GH_LOG_LEVEL)"
+	default GH_LOG_LEVEL_ERROR
+
+	config GH_LOG_LEVEL_NONE
+		bool "None"
+
+	config GH_LOG_LEVEL_DEBUG
+		bool "Debug"
+
+	config GH_LOG_LEVEL_WARNING
+		bool "Warning"
+
+	config GH_LOG_LEVEL_ERROR
+		bool "Error"
+
+endchoice
+
+config GH_APP_LOG_EN
+	bool "Enable app logging (GH_APP_LOG_EN)"
+	default n
+
+config GH_APP_MIPS_LOG_EN
+	bool "Enable app MIPS logging (GH_APP_MIPS_LOG_EN)"
+	default n
+
+config GH_APP_MANAGER_LOG_EN
+	bool "Enable app manager logging (GH_APP_MANAGER_LOG_EN)"
+	default n
+
+config GH_APP_ALGO_LOG_EN
+	bool "Enable app algo logging (GH_APP_ALGO_LOG_EN)"
+	default n
+
+config GH_APP_FUSION_LOG_EN
+	bool "Enable app fusion logging (GH_APP_FUSION_LOG_EN)"
+	default n
+
+config GH_APP_MOVE_DET_LOG_EN
+	bool "Enable app move detect logging (GH_APP_MOVE_DET_LOG_EN)"
+	default n
+
+config GH_APP_MTSS_LOG_EN
+	bool "Enable app MTSS logging (GH_APP_MTSS_LOG_EN)"
+	default n
+
+config GH_MODULE_FIFO_LOG_EN
+	bool "Enable module FIFO logging (GH_MODULE_FIFO_LOG_EN)"
+	default n
+
+config GH_MODULE_ISR_LOG_EN
+	bool "Enable module ISR logging (GH_MODULE_ISR_LOG_EN)"
+	default n
+
+config GH_HAL_SERVICE_LOG_EN
+	bool "Enable HAL service logging (GH_HAL_SERVICE_LOG_EN)"
+	default n
+
+config GH_HAL_LOG_EN
+	bool "Enable HAL config logging (GH_HAL_LOG_EN)"
+	default n
+
+config GH_MODULE_PROTOCOL_LOG_EN
+	bool "Enable module protocol logging (GH_MODULE_PROTOCOL_LOG_EN)"
+	default n
+
+config GH_HAL_STD_LOG_EN
+	bool "Enable HAL std logging (GH_HAL_STD_LOG_EN)"
+	default n
+
+config GH_HAL_SETTINGS_LOG_EN
+	bool "Enable HAL settings logging (GH_HAL_SETTINGS_LOG_EN)"
+	default n
+
+config GH_HAL_CONTROL_LOG_EN
+	bool "Enable HAL control logging (GH_HAL_CONTROL_LOG_EN)"
+	default n
+
+config GH_AGC_LOG_EN
+	bool "Enable AGC logging (GH_AGC_LOG_EN)"
+	default n
+
+endmenu

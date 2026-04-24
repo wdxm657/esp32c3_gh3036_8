@@ -1,0 +1,9 @@
+menu "Protocol (gh_protocol) configuration"
+
+config GH_PROTOCOL_EN
+	bool "Enable GH protocol"
+	default n
+
+# Note: GH_FIFO_READ_MAX_NUM is considered an app-level config (moved to kconfig.app)
+
+endmenu

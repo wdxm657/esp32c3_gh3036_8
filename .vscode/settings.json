@@ -1,0 +1,42 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPathWin": "e:\\ESP-IDF\\sdk\\v5.5",
+  "idf.pythonInstallPath": "e:\\ESP-IDF\\tools\\esp\\tools\\idf-python\\3.11.2\\python.exe",
+  "idf.openOcdConfigs": [
+    "board/esp32c3-ftdi.cfg"
+  ],
+  "idf.portWin": "COM33",
+  "idf.toolsPathWin": "e:\\ESP-IDF\\tools\\esp",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32c3"
+  },
+  "clangd.path": "e:\\ESP-IDF\\tools\\esp\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=e:\\ESP-IDF\\project\\esp32c3_gh3036_8\\build"
+],
+"idf.flashType": "UART",
+"idf.currentSetup": "C:\\esp\\v5.5.3\\esp-idf",
+"files.associations": {
+  "spi_master.h": "c",
+  "esp_log.h": "c",
+  "sdkconfig.h": "c",
+  "gh_demo_api.h": "c",
+  "gh_algo_adapter_common.h": "c",
+  "gh_hal_config_process.h": "c",
+  "gh_hal_interface.h": "c",
+  "gh_global_config.h": "c",
+  "esp_rom_sys.h": "c",
+  "gh_public_api.h": "c",
+  "gh_app_user.h": "c",
+  "timers.h": "c",
+  "freertos.h": "c",
+  "gh_app_manager.h": "c",
+  "gh_data_package.h": "c",
+  "gh_app.h": "c",
+  "gh_hal_log.h": "c",
+  "esp_timer.h": "c",
+  "goodix_hrv.h": "c"
+}
+}

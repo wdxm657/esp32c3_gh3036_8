@@ -1,0 +1,49 @@
+menu "Algorithm (gh_algo) configuration"
+
+config GH_ALGO_ADAPTER_EN
+	bool "Enable algorithm adapter (GH_ALGO_ADAPTER_EN)"
+	default n
+
+config GH_ALGO_EN
+	bool "Enable algorithms (GH_ALGO_EN)"
+	default y
+    depends on GH_ALGO_ADAPTER_EN
+
+config GH_ALGO_LEVEL
+	int "Algorithm tier (GH_ALGO_LEVEL)"
+    range 0 4
+	default 4
+    help
+        0: BASIC
+        2: MEDIUM
+        3: PREMIUM
+        4: EXCLUSIVE
+
+config GOODIX_HR_ALGO_VERISON
+	int "Goodix HR algo version (GOODIX_HR_ALGO_VERISON)"
+	default 4
+    help
+        0: BASIC
+        2: MEDIUM
+        3: PREMIUM
+        4: EXCLUSIVE
+
+config GOODIX_SPO2_ALGO_VERISON
+	int "Goodix SPO2 algo version (GOODIX_SPO2_ALGO_VERISON)"
+	default 4
+    help
+        0: BASIC
+        2: MEDIUM
+        3: PREMIUM
+        4: EXCLUSIVE
+
+config GH_HR_ALGO_SUPPORT_CHNL_MAX
+	int "HR algo support channel max (GH_HR_ALGO_SUPPORT_CHNL_MAX)"
+	default 1
+
+config GH_SPO2_ALGO_SUPPORT_CHNL_MAX
+	int "SPO2 algo support channel max (GH_SPO2_ALGO_SUPPORT_CHNL_MAX)"
+	default 1
+
+
+endmenu

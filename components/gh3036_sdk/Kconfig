@@ -1,0 +1,39 @@
+menu "GH3036 SDK Configuration"
+
+config GH3036_SDK_ENABLE
+    bool "Enable GH3036 SDK"
+    default y
+    help
+        Enable the GH3036 SDK.
+
+if GH3036_SDK_ENABLE
+
+orsource "Kconfig.hal"
+if GH_USE_SDK_APP = y
+orsource "Kconfig.protocol"
+orsource "Kconfig.algo"
+orsource "Kconfig.app"
+endif
+
+config GH_AUTO_CONFIG_H
+    string "Auto config HAL (GH_AUTO_CONFIG_H)"
+    default "gh_auto_config_kconfig.h"
+
+config AUTO_CONFIG_H
+    string "Auto config for Kconfig (AUTO_CONFIG_H)"
+    default "sdkconfig.h" 
+endif
+
+config GH_LIB_NAME_PREFIX
+    string "Library Name Prefix"
+    default "riscv32_gcc-14.2.0-esp_os+soft_"
+    help
+        Library name prefix.
+
+config GH_LIB_NAME_SUFFIX   
+    string "Library Name Suffix"
+    default "a"
+    help
+        Library name suffix.
+
+endmenu
