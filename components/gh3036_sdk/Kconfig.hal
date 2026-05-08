@@ -184,7 +184,7 @@ config GH_MODULE_ISR_LOG_EN
 
 config GH_HAL_SERVICE_LOG_EN
 	bool "Enable HAL service logging (GH_HAL_SERVICE_LOG_EN)"
-	default n
+	default y
 
 config GH_HAL_LOG_EN
 	bool "Enable HAL config logging (GH_HAL_LOG_EN)"

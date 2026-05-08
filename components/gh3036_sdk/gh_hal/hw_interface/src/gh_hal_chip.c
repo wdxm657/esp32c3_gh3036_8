@@ -5,6 +5,7 @@
 #include "gh_hal_user.h"
 #include "gh_hal_config.h"
 #include "gh3036_reg.h"
+#include "esp_log.h"
 
 uint32_t gh3036_top_start(uint8_t start)
 {
@@ -513,6 +514,7 @@ uint32_t gh_hal_chip_reset(void)
     return ret;
 }
 
+static const char TAG[] = "gh_hal_interface";
 uint32_t gh3036_chip_ready(void)
 {
     uint16_t reg_data = 0;
@@ -521,11 +523,12 @@ uint32_t gh3036_chip_ready(void)
     {
         gh_hal_reg_bit_field_read(RG_CHIP_READY_CODE_ADDR, RG_CHIP_READY_CODE_LSB,
                                   RG_CHIP_READY_CODE_MSB, &reg_data);
+        ESP_LOGI(TAG, "gh_hal_reg_bit_field_read reg_data: 0x%x, cnt: %d", reg_data, cnt);
         if (GH3036_CHIP_READY_VAL == reg_data)
         {
             return (uint32_t)GH_HAL_OK;
         }
-        gh_hal_delay_ms(1);
+        gh_hal_delay_ms(10);
         --cnt;
     } while (cnt);
 
@@ -537,20 +540,23 @@ uint32_t gh_hal_interface_init(void)
     uint32_t ret = 0;
 #if (GH_INTERFACE_TYPE == GH_INTERFACE_SPI_SW_CS || GH_INTERFACE_TYPE == GH_INTERFACE_SPI_HW_CS)
     ret |= gh_hal_spi_init();
+    ESP_LOGI(TAG, "gh_hal_spi_init ret: %d", ret);
 #elif (GH_INTERFACE_TYPE == GH_INTERFACE_I2C)
     ret |= gh_hal_i2c_init();
+    ESP_LOGI(TAG, "gh_hal_i2c_init ret: %d", ret);
 #endif
 #if GH_SUPPORT_HARD_RESET
     ret |= gh_hal_reset_pin_init();
+    ESP_LOGI(TAG, "gh_hal_reset_pin_init ret: %d", ret);
 #endif
     ret |= gh_hal_chip_reset();
-
+    ESP_LOGI(TAG, "gh_hal_chip_reset ret: %d", ret);
     ret |= gh3036_chip_ready();
-
+    ESP_LOGI(TAG, "gh3036_chip_ready ret: %d", ret);
 #if (GH_ISR_MODE == INTERRUPT_MODE)
     ret |= gh_hal_int_pin_init();
 #endif
-
+    ESP_LOGI(TAG, "gh_hal_int_pin_init ret: %d", ret);
 
     return ret;
 }

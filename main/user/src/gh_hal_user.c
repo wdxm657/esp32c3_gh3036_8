@@ -112,22 +112,22 @@ static const char* g_data_type[] =
 #define GH_ESP_SPI_HOST               SPI2_HOST
 #endif
 #ifndef GH_ESP_SPI_SCLK_GPIO
-#define GH_ESP_SPI_SCLK_GPIO          11
+#define GH_ESP_SPI_SCLK_GPIO          6
 #endif
 #ifndef GH_ESP_SPI_MOSI_GPIO
-#define GH_ESP_SPI_MOSI_GPIO          12
+#define GH_ESP_SPI_MOSI_GPIO          7
 #endif
 #ifndef GH_ESP_SPI_MISO_GPIO
-#define GH_ESP_SPI_MISO_GPIO          13
+#define GH_ESP_SPI_MISO_GPIO          2
 #endif
 #ifndef GH_ESP_SPI_CS_GPIO
 #define GH_ESP_SPI_CS_GPIO            10
 #endif
 #ifndef GH_ESP_INT_GPIO
-#define GH_ESP_INT_GPIO               9
+#define GH_ESP_INT_GPIO               4
 #endif
 #ifndef GH_ESP_RESET_GPIO
-#define GH_ESP_RESET_GPIO             8
+#define GH_ESP_RESET_GPIO             5
 #endif
 #ifndef GH_ESP_SPI_CLOCK_HZ
 #define GH_ESP_SPI_CLOCK_HZ           (2 * 1000 * 1000)
@@ -158,7 +158,7 @@ static esp_err_t gh_spi_ensure_init(void)
         .sclk_io_num = GH_ESP_SPI_SCLK_GPIO,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
-        .max_transfer_sz = GH_ESP_SPI_MAX_TRANSFER_SZ,
+        .max_transfer_sz = 0,
     };
 
     esp_err_t ret = spi_bus_initialize(GH_ESP_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO);
@@ -170,9 +170,13 @@ static esp_err_t gh_spi_ensure_init(void)
     spi_device_interface_config_t devcfg = {
         .clock_speed_hz = GH_ESP_SPI_CLOCK_HZ,
         .mode = GH_ESP_SPI_MODE,
+#if (GH_INTERFACE_TYPE == GH_INTERFACE_SPI_HW_CS)
+        .spics_io_num = GH_ESP_SPI_CS_GPIO,
+#else
         .spics_io_num = -1,
+#endif
         .queue_size = GH_ESP_SPI_QUEUE_SIZE,
-        .flags = SPI_DEVICE_HALFDUPLEX,
+        .flags = 0,
     };
 
     ret = spi_bus_add_device(GH_ESP_SPI_HOST, &devcfg, &s_gh_spi_dev);
@@ -192,6 +196,7 @@ static esp_err_t gh_spi_ensure_init(void)
     gpio_set_level(GH_ESP_SPI_CS_GPIO, 1);
 
     s_gh_spi_inited = true;
+    ESP_LOGI(TAG, "gh_spi_ensure_init ok");
     return ESP_OK;
 }
 
@@ -325,7 +330,7 @@ uint32_t gh_hal_int_pin_init(void)
         .mode = GPIO_MODE_INPUT,
         .pull_up_en = GPIO_PULLUP_ENABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type = GPIO_INTR_DISABLE,
+        .intr_type = GPIO_INTR_POSEDGE,
     };
 
     return (gpio_config(&int_io_cfg) == ESP_OK) ? 0 : 1;

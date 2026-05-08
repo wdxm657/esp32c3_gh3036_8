@@ -27,8 +27,8 @@ void app_main(void)
     gh_app_demo_init();
     gh_app_demo_start(GH_FUNC_SLOT_EN);
     while (1) {
-        // Add your main loop handling code here.
-        vTaskDelay(1000);
+        /* GH303X INT is pulse-based; service pending events promptly (<20ms) */
         gh_app_demo_int_process();
+        vTaskDelay(pdMS_TO_TICKS(5));
     }
 }

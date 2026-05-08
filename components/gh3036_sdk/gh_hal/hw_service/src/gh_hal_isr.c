@@ -92,7 +92,7 @@ uint32_t gh_hal_isr(void)
         }
 #endif
         fifo_use_byte_len = (uint32_t)fifo_used * GH3036_FIFO_WIDTH;
-        DEBUG_LOG("fifo_used = %d, fifo_use_byte_len = %d", fifo_used, fifo_use_byte_len);
+        DEBUG_LOG("fifo_used = %d, fifo_use_byte_len = %d", fifo_used, (int)fifo_use_byte_len);
 
         do
         {
@@ -102,9 +102,9 @@ uint32_t gh_hal_isr(void)
 
             gh_fifo_timestamp_update(p_fifo_parser, gh_hal_get_timestamp());
             DEBUG_LOG("fifo_buffer_index = %d, fifo_use_byte_len = %d, time: %lld - %lld, diff: %lld",
-                      p_fifo_parser->fifo_buffer_index, fifo_use_byte_len,
-                      p_fifo_parser->time_stamp_begin,  p_fifo_parser->time_stamp_end,
-                      p_fifo_parser->time_stamp_end - p_fifo_parser->time_stamp_begin);
+                      (int)p_fifo_parser->fifo_buffer_index, (int)fifo_use_byte_len,
+                      (long long)p_fifo_parser->time_stamp_begin, (long long)p_fifo_parser->time_stamp_end,
+                      (long long)(p_fifo_parser->time_stamp_end - p_fifo_parser->time_stamp_begin));
 #if GH_SUPPORT_SOFT_AGC
             gh_update_agc_info();
 #endif

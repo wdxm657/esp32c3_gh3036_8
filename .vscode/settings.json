@@ -5,7 +5,7 @@
   "idf.openOcdConfigs": [
     "board/esp32c3-ftdi.cfg"
   ],
-  "idf.portWin": "COM33",
+  "idf.portWin": "COM14",
   "idf.toolsPathWin": "e:\\ESP-IDF\\tools\\esp",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32c3"
@@ -37,6 +37,7 @@
   "gh_app.h": "c",
   "gh_hal_log.h": "c",
   "esp_timer.h": "c",
-  "goodix_hrv.h": "c"
+  "goodix_hrv.h": "c",
+  "cstdint": "c"
 }
 }

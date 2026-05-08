@@ -33,7 +33,7 @@ void gh_app_demo_init(void)
 
 #if (1 == GH_ALGO_EN)
     goodix_hba_version(goodix_algo_version);
-    GH_LOG_LVL_DEBUG("hba version: %s\r\n", goodix_algo_version);
+    GH_LOG_LVL_DEBUG("1hba version: %s\r\n", goodix_algo_version);
     goodix_spo2_version(goodix_algo_version);
     GH_LOG_LVL_DEBUG("spo2 version: %s\r\n", goodix_algo_version);
     goodix_nadt_version(goodix_algo_version);
