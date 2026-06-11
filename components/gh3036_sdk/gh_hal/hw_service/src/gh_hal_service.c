@@ -168,9 +168,9 @@ uint32_t gh_hal_service_init(void)
     gh_hal_agc_t* p_agc = gh_hal_get_agc();
 #endif
     gh_hal_settings_t* p_hal_settings = gh_hal_get_settings();
-
+    DEBUG_LOG("gh_hal_service_init start");
     ret = gh_hal_interface_init();
-
+    DEBUG_LOG("gh_hal_interface_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_INTF_INIT_ERROR;
@@ -179,6 +179,7 @@ uint32_t gh_hal_service_init(void)
     }
 
     ret = gh_hal_settings_init(p_hal_settings);
+    DEBUG_LOG("gh_hal_settings_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_SETTINGS_INIT_ERROR;
@@ -188,6 +189,7 @@ uint32_t gh_hal_service_init(void)
 
     p_hal_control->p_settings = p_hal_settings;
     ret = gh_hal_control_init(p_hal_control, gh_slot_disable_callback);
+    DEBUG_LOG("gh_hal_control_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_CONTROL_INIT_ERROR;
@@ -198,6 +200,7 @@ uint32_t gh_hal_service_init(void)
     p_fifo_parser->p_settings = p_hal_settings;
     ret = gh_hal_fifo_init(p_fifo_parser, (uint8_t*)g_fifo_buffer, GH_FIFO_READ_BUFFER_SIZE,
                            g_data_buffer, GH_FIFO_DATA_BULK_LEN);
+    DEBUG_LOG("gh_hal_fifo_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_FIFO_PARSER_INIT_ERROR;
@@ -210,8 +213,10 @@ uint32_t gh_hal_service_init(void)
                                      gh_data_cali_callback,
                                      ghdata_agc_callback);
 
+    DEBUG_LOG("gh_fifo_call_back_register ret: %x", ret);
     p_std_parser->p_settings = p_hal_settings;
     ret = gh_hal_std_init(p_std_parser);
+    DEBUG_LOG("gh_hal_std_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_STD_INIT_ERROR;
@@ -229,6 +234,7 @@ uint32_t gh_hal_service_init(void)
     p_agc->param_update_start = gh_hal_param_update_start;
     #endif
     ret = gh_agc_init(p_agc);
+    DEBUG_LOG("gh_agc_init ret: %x", ret);
     if (0 != GH_RET_HAL_ERR_GET(ret))
     {
         ret = GH_SERVICE_AGC_INIT_ERROR;
@@ -237,6 +243,7 @@ uint32_t gh_hal_service_init(void)
     }
 #endif
 
+    DEBUG_LOG("gh_hal_service_init ret: %x", ret);
     return ret;
 }
 

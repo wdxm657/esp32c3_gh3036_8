@@ -1,5 +1,5 @@
 #include "gh_demo_api.h"
-
+#include "esp_log.h"
 extern int8_t *gh_sdk_version_get(void);
 #if (1 == GH_ALGO_EN)
 extern int32_t goodix_hba_version(uint8_t version[150]);
@@ -9,7 +9,7 @@ extern int32_t goodix_hrv_version(uint8_t version[150]);
 static uint8_t goodix_algo_version[150];
 #endif
 
-
+static const char TAG[] = "gh_demo_api";
 static gh_function_en_union_t s_func_en; 
 static uint8_t current_cfg_index = 0xFF;
 
@@ -17,29 +17,31 @@ void gh_app_demo_init(void)
 {
     if(GH_API_OK == gh_demo_init())
     {
-        GH_LOG_LVL_DEBUG("gh demo init ok!\r\n");
+        ESP_LOGI(TAG, "gh demo init ok!\r\n");
     }
     
-    if(GH_API_OK == gh_hal_service_init())
+    uint32_t ret = gh_hal_service_init();
+    ESP_LOGI(TAG, "gh_hal_service_init ret: %x", ret);
+    if(GH_API_OK == ret)
     {
-      GH_LOG_LVL_DEBUG("gh hal service init ok!\r\n");  
+      ESP_LOGI(TAG, "gh hal service init ok!\r\n");  
     }
 #if (1 == GH_PROTOCOL_EN)
     gh_protocol_init();
-    GH_LOG_LVL_DEBUG("gh protocol init ok!\r\n");  
+    ESP_LOGI(TAG, "gh protocol init ok!\r\n");  
 #endif
 
-    GH_LOG_LVL_DEBUG("SDK version: %s\r\n", gh_sdk_version_get());
+    ESP_LOGI(TAG, "SDK version: %s\r\n", gh_sdk_version_get());
 
 #if (1 == GH_ALGO_EN)
     goodix_hba_version(goodix_algo_version);
-    GH_LOG_LVL_DEBUG("1hba version: %s\r\n", goodix_algo_version);
+    ESP_LOGI(TAG, "hba version: %s\r\n", goodix_algo_version);
     goodix_spo2_version(goodix_algo_version);
-    GH_LOG_LVL_DEBUG("spo2 version: %s\r\n", goodix_algo_version);
+    ESP_LOGI(TAG, "spo2 version: %s\r\n", goodix_algo_version);
     goodix_nadt_version(goodix_algo_version);
-    GH_LOG_LVL_DEBUG("nadt version: %s\r\n", goodix_algo_version);
+    ESP_LOGI(TAG, "nadt version: %s\r\n", goodix_algo_version);
     goodix_hrv_version(goodix_algo_version);
-    GH_LOG_LVL_DEBUG("hrv version: %s\r\n", goodix_algo_version);
+    ESP_LOGI(TAG, "hrv version: %s\r\n", goodix_algo_version);
 #endif
 
     gh_hal_delay_ms(10);

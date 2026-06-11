@@ -26,9 +26,9 @@ void app_main(void)
     ESP_LOGI(TAG, "GH3036 SDK Demo Start");
     gh_app_demo_init();
     gh_app_demo_start(GH_FUNC_SLOT_EN);
-    while (1) {
-        /* GH303X INT is pulse-based; service pending events promptly (<20ms) */
-        gh_app_demo_int_process();
+    while (1)
+    {
         vTaskDelay(pdMS_TO_TICKS(5));
+        gh_app_demo_int_process();
     }
 }
