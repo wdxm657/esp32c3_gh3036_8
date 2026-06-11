@@ -116,7 +116,7 @@ __attribute__((weak)) uint32_t gh_hal_delay_us(uint16_t us)
     return 0;
 }
 
-__attribute__((weak)) int gh_hal_log_user(char *str)
+__attribute__((weak)) int gh_hal_log_user(char *str, const char *file, int line)
 {
     // bsp_log_out(str);
     return 0;

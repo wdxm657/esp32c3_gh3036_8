@@ -111,17 +111,17 @@ static const char* g_data_type[] =
 #ifndef GH_ESP_SPI_HOST
 #define GH_ESP_SPI_HOST               SPI2_HOST
 #endif
-#ifndef GH_ESP_SPI_SCLK_GPIO
-#define GH_ESP_SPI_SCLK_GPIO          6
-#endif
-#ifndef GH_ESP_SPI_MOSI_GPIO
-#define GH_ESP_SPI_MOSI_GPIO          7
+#ifndef GH_ESP_SPI_CS_GPIO
+#define GH_ESP_SPI_CS_GPIO            10
 #endif
 #ifndef GH_ESP_SPI_MISO_GPIO
 #define GH_ESP_SPI_MISO_GPIO          2
 #endif
-#ifndef GH_ESP_SPI_CS_GPIO
-#define GH_ESP_SPI_CS_GPIO            10
+#ifndef GH_ESP_SPI_MOSI_GPIO
+#define GH_ESP_SPI_MOSI_GPIO          7
+#endif
+#ifndef GH_ESP_SPI_SCLK_GPIO
+#define GH_ESP_SPI_SCLK_GPIO          6
 #endif
 #ifndef GH_ESP_INT_GPIO
 #define GH_ESP_INT_GPIO               4
@@ -217,11 +217,11 @@ uint32_t gh_hal_delay_us(uint16_t us)
     return 0;
 }
 
-int gh_hal_log_user(char *str)
+int gh_hal_log_user(char *str, const char *file, int line)
 {
     if (str != NULL)
     {
-        ESP_LOGI(TAG, "%s", str);
+        ESP_LOGI(TAG, "[%s:%d]:%s", file, line, str);
     }
     return 0;
 }

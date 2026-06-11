@@ -198,7 +198,7 @@ int gh_hal_snprintf_user(char *p_str, size_t size, const char *p_format, ...);
  *
  * @return  error code
  */
-int gh_hal_log_user(char *p_str);
+int gh_hal_log_user(char *p_str, const char *file, int line);
 
 /**
  * @fn     uint32_t gh_hal_int_pin_init(void);

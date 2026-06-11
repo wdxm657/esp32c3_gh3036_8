@@ -360,6 +360,15 @@
 	#endif
 #endif
 
+#ifndef GH_FUNC_SLOT_EN
+	#if defined(CONFIG_GH_FUNC_SLOT_EN)
+		#define GH_FUNC_SLOT_EN                                (CONFIG_GH_FUNC_SLOT_EN)
+	#else
+		#define GH_FUNC_SLOT_EN                                (0)
+	#endif
+#endif
+
+
 /* Function enables (grouped defaults) */
 #ifndef GH_FUNC_ADT_EN
 	#if defined(CONFIG_GH_FUNC_ADT_EN)

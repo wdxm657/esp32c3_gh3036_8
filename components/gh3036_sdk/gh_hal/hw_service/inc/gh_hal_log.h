@@ -102,6 +102,8 @@ extern "C"
 #define GH_LOG_LEVEL_DEBUG           1
 #define GH_LOG_LEVEL_WARNING         2
 #define GH_LOG_LEVEL_ERROR           3
+#include "string.h"
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 #define GH_LOG_DEBUG_TAG             "[GH][D]"
 #define GH_LOG_WARNING_TAG           "[GH][W]"
 #define GH_LOG_ERROR_TAG             "[GH][E]"
@@ -130,7 +132,7 @@ extern "C"
 #define GH_LOG_LVL_ERROR(...)
 #else
 
-int gh_hal_log_user(char *p_str);
+int gh_hal_log_user(char *p_str, const char *file, int line);
 
 #if (GH_USE_STD_SNPRINTF == 0)
 // #define GH_SNPRINTF(buffer, size, format, ...)  gh_hal_snprintf_user(buffer, size, format, __VA_ARGS__)
@@ -139,13 +141,15 @@ int gh_hal_log_user(char *p_str);
 #define GH_SNPRINTF                               snprintf
 #endif
 
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+
 #if (GH_LOG_LEVEL >= GH_LOG_LEVEL_DEBUG)
 #define GH_LOG_LVL_DEBUG(...)    do {\
                                         char gh_log[GH_LOG_MAX_LEN] = GH_LOG_DEBUG_TAG;\
                                         GH_SNPRINTF(&gh_log[gh_strlen(GH_LOG_DEBUG_TAG)], \
                                                     GH_LOG_MAX_LEN - gh_strlen(GH_LOG_DEBUG_TAG), \
                                                     __VA_ARGS__);\
-                                        gh_hal_log_user((char *)gh_log);\
+                                        gh_hal_log_user((char *)gh_log, __FILENAME__, __LINE__);\
                                     } while (0)
 #endif
 
@@ -155,7 +159,7 @@ int gh_hal_log_user(char *p_str);
                                         GH_SNPRINTF(&gh_log[gh_strlen(GH_LOG_WARNING_TAG)], \
                                                     GH_LOG_MAX_LEN - gh_strlen(GH_LOG_WARNING_TAG), \
                                                     __VA_ARGS__);\
-                                        gh_hal_log_user((char *)gh_log);\
+                                        gh_hal_log_user((char *)gh_log, __FILENAME__, __LINE__);\
                                       } while (0)
 #endif
 
@@ -165,7 +169,7 @@ int gh_hal_log_user(char *p_str);
                                         GH_SNPRINTF(&gh_log[gh_strlen(GH_LOG_ERROR_TAG)], \
                                                     GH_LOG_MAX_LEN - gh_strlen(GH_LOG_ERROR_TAG), \
                                                     __VA_ARGS__);\
-                                        gh_hal_log_user((char *)gh_log);\
+                                        gh_hal_log_user((char *)gh_log, __FILENAME__, __LINE__);\
                                     } while (0)
 
 #endif
