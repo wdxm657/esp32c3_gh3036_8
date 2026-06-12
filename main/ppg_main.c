@@ -43,7 +43,7 @@ void app_main(void)
 
     ESP_LOGI(TAG, "GH3036 SDK Demo Start");
     gh_app_demo_init();
-    gh_app_demo_start(EN_ADT);
+    gh_app_demo_start(EN_HR | EN_HRV | EN_ADT);
     while (1)
     {
         vTaskDelay(pdMS_TO_TICKS(5));

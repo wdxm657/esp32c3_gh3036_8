@@ -189,16 +189,16 @@ uint32_t gh_demo_data_log(gh_func_frame_t *p_frame)
 #if (GH_USE_GOODIX_HR_ALGO)
         case GH_FUNC_FIX_IDX_HR:
         {
-            GH_LOG_LVL_DEBUG("[%d]hr_fi=%d,gs=%d,%d,%d,CF:%d,%d,GF=%sraw:%s\n",
-                             (int)(p_frame->timestamp/1000),
-                             (int)(p_frame->frame_cnt),
-                             (int)p_frame->gsensor_data.acc[GH_ACCX_IDX],
-                             (int)p_frame->gsensor_data.acc[GH_ACCY_IDX],
-                             (int)p_frame->gsensor_data.acc[GH_ACCZ_IDX],
-                             (int)flag0,
-                             (int)flag1,
-                             gf_str,
-                             raw_str);
+            // GH_LOG_LVL_DEBUG("[%d]hr_fi=%d,gs=%d,%d,%d,CF:%d,%d,GF=%sraw:%s\n",
+            //                  (int)(p_frame->timestamp/1000),
+            //                  (int)(p_frame->frame_cnt),
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCX_IDX],
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCY_IDX],
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCZ_IDX],
+            //                  (int)flag0,
+            //                  (int)flag1,
+            //                  gf_str,
+            //                  raw_str);
             if (GH_NULL_PTR != p_frame->p_algo_res)
             {
                 gh_algo_hr_result_t *p_hr_res = (gh_algo_hr_result_t *)p_frame->p_algo_res;
@@ -244,16 +244,16 @@ uint32_t gh_demo_data_log(gh_func_frame_t *p_frame)
 #if (GH_USE_GOODIX_HRV_ALGO)
         case GH_FUNC_FIX_IDX_HRV:
         {
-            GH_LOG_LVL_DEBUG("[%d]hrv_fi=%d,gs=%d,%d,%d,CF:%d,%d,GF=%sraw:%s\n",
-                             (int)(p_frame->timestamp/1000),
-                             (int)(p_frame->frame_cnt),
-                             (int)p_frame->gsensor_data.acc[GH_ACCX_IDX],
-                             (int)p_frame->gsensor_data.acc[GH_ACCY_IDX],
-                             (int)p_frame->gsensor_data.acc[GH_ACCZ_IDX],
-                             (int)flag0,
-                             (int)flag1,
-                             gf_str,
-                             raw_str);
+            // GH_LOG_LVL_DEBUG("[%d]hrv_fi=%d,gs=%d,%d,%d,CF:%d,%d,GF=%sraw:%s\n",
+            //                  (int)(p_frame->timestamp/1000),
+            //                  (int)(p_frame->frame_cnt),
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCX_IDX],
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCY_IDX],
+            //                  (int)p_frame->gsensor_data.acc[GH_ACCZ_IDX],
+            //                  (int)flag0,
+            //                  (int)flag1,
+            //                  gf_str,
+            //                  raw_str);
             if (GH_NULL_PTR != p_frame->p_algo_res)
             {
                 if (gh_has_nonzero(p_frame->p_algo_res, sizeof(goodix_hrv_result)))
@@ -341,7 +341,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
 #endif
 
     /* Example1: get algorithm result */
-#if 0
+#if 1
     if (GH_NULL_PTR == p_frame->p_algo_res)
     {
         return 0;
@@ -352,40 +352,44 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
         case GH_FUNC_FIX_IDX_ADT:
         {
             /* ADT algorithm result example */
-//            gh_algo_adt_result_t *p_adt_res = (gh_algo_adt_result_t *)p_frame->p_algo_res;
-//            APP_LOG_DEBUG("[ADT] wear_status:%d, det_status:%d, ctr:%d\r\n", p_adt_res->wear_evt,
-//                          p_adt_res->det_status, p_adt_res->ctr);
+           gh_algo_adt_result_t *p_adt_res = (gh_algo_adt_result_t *)p_frame->p_algo_res;
+           GH_LOG_LVL_DEBUG("[ADT] wear_status:%d, det_status:%d, ctr:%d\r\n", p_adt_res->wear_evt,
+                         p_adt_res->det_status, p_adt_res->ctr);
         }
         break;
 
         case GH_FUNC_FIX_IDX_HR:
         {
             /* HR algorithm result example */
-//            gh_algo_hr_result_t *p_hr_res = (gh_algo_hr_result_t *)p_frame->p_algo_res;
-//            APP_LOG_DEBUG("[HR] flag:%d, out:%d, snr:%d, level:%d, score:%d, acc:%d, scence:%d\r\n",
-//                          p_hr_res->hba_out_flag, p_hr_res->hba_out, p_hr_res->hba_snr,
-//                          p_hr_res->valid_level, p_hr_res->valid_score, p_hr_res->hba_acc_info,
-//                          p_hr_res->hba_reg_scence);
+           gh_algo_hr_result_t *p_hr_res = (gh_algo_hr_result_t *)p_frame->p_algo_res;
+           if (p_hr_res->hba_out_flag)
+           {
+           GH_LOG_LVL_DEBUG("[HR] flag:%d, out:%d, snr:%d, level:%d, score:%d, acc:%d, scence:%d\r\n",
+                         p_hr_res->hba_out_flag, p_hr_res->hba_out, p_hr_res->hba_snr,
+                         p_hr_res->valid_level, p_hr_res->valid_score, p_hr_res->hba_acc_info,
+                         p_hr_res->hba_reg_scence);
+           }
+
         }
         break;
 
         case GH_FUNC_FIX_IDX_SPO2:
         {
             /* SPO2 algorithm result example */
-//            gh_algo_spo2_result_t *p_spo2_res = (gh_algo_spo2_result_t *)p_frame->p_algo_res;
-//            APP_LOG_DEBUG("[SPO2] final:%d, r:%d, confi:%d, level:%d, hb:%d, flag:%d\r\n",
-//                          p_spo2_res->final_spo2, p_spo2_res->r_val, p_spo2_res->confi_coeff,
-//                          p_spo2_res->valid_level, p_spo2_res->hb_mean, p_spo2_res->invalid_flag);
+           gh_algo_spo2_result_t *p_spo2_res = (gh_algo_spo2_result_t *)p_frame->p_algo_res;
+           GH_LOG_LVL_DEBUG("[SPO2] final:%d, r:%d, confi:%d, level:%d, hb:%d, flag:%d\r\n",
+                         p_spo2_res->final_spo2, p_spo2_res->final_r_val, p_spo2_res->final_confi_coeff,
+                         p_spo2_res->final_valid_level, p_spo2_res->final_hb_mean, p_spo2_res->final_invalidFlg);
         }
         break;
 
         case GH_FUNC_FIX_IDX_HRV:
         {
             /* HRV algorithm result example */
-//            gh_algo_hrv_result_t *p_hrv_res = (gh_algo_hrv_result_t *)p_frame->p_algo_res;
-//            APP_LOG_DEBUG("[HRV] rri0:%d, rri1:%d, rri2:%d, rri3:%d, confi:%d, num:%d\r\n",
-//                          p_hrv_res->rri[0], p_hrv_res->rri[1], p_hrv_res->rri[2],
-//                          p_hrv_res->rri[3], p_hrv_res->confidence, p_hrv_res->valid_num);
+           gh_algo_hrv_result_t *p_hrv_res = (gh_algo_hrv_result_t *)p_frame->p_algo_res;
+           GH_LOG_LVL_DEBUG("[HRV] rri0:%d, rri1:%d, rri2:%d, rri3:%d, confi:%d, num:%d\r\n",
+                         p_hrv_res->rri[0], p_hrv_res->rri[1], p_hrv_res->rri[2],
+                         p_hrv_res->rri[3], p_hrv_res->rri_confidence, p_hrv_res->rri_valid_num);
         }
         break;
 
@@ -394,7 +398,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
         {
             /* NADT algorithm result example */
 //            gh_algo_nadt_result_t *p_nadt_res = (gh_algo_nadt_result_t *)p_frame->p_algo_res;
-//            APP_LOG_DEBUG("[NADT] wear_off_detect:%d, live_body_conf:%d\r\n",
+//            GH_LOG_LVL_DEBUG("[NADT] wear_off_detect:%d, live_body_conf:%d\r\n",
 //                          GH_ALGO_NADT_RES0_MASK(p_nadt_res->nadt_out), p_nadt_res->live_body_conf);
         }
         break;
@@ -406,7 +410,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
 
     /* Example2: get rawdata or debug data */
 #if 0
-    APP_LOG_DEBUG("[ch_num]:%d\r\n", p_frame->ch_num);
+    GH_LOG_LVL_DEBUG("[ch_num]:%d\r\n", p_frame->ch_num);
 
     for (uint8_t cnt = 0; cnt < p_frame->ch_num; cnt++)
     {
@@ -415,7 +419,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_PPG_DATA:
             {
                 /* PPG rawdata example */
-//                APP_LOG_DEBUG("[DATA][%d] cnt:%d, ch_num:%d, func:%s, data_type:%s, cfg%d, rx%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d] cnt:%d, ch_num:%d, func:%s, data_type:%s, cfg%d, rx%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,
@@ -429,7 +433,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_PPG_MIX_DATA:
             {
                 /* PPG mix data example */
-//                APP_LOG_DEBUG("[DATA][%d] cnt:%d, ch_num:%d, func:%s, data_type:%s, cfg%d, rx%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d] cnt:%d, ch_num:%d, func:%s, data_type:%s, cfg%d, rx%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,
@@ -443,7 +447,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_PPG_BG_DATA:
             {
                 /* PPG bg data example */
-//                APP_LOG_DEBUG("[DATA][%d] cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d] cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,
@@ -457,7 +461,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_CAP_DATA:
             {
                 /* PPG cap data example */
-//                APP_LOG_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,
@@ -470,7 +474,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_PPG_PARAM_DATA:
             {
                 /* PPG param data example */
-//                APP_LOG_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,
@@ -484,7 +488,7 @@ uint32_t gh_demo_data_publish(gh_func_frame_t *p_frame)
             case GH_PPG_DRE_DATA:
             {
                 /* PPG dre data example */
-//                APP_LOG_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
+//                GH_LOG_LVL_DEBUG("[DATA][%d]cnt:%d,ch_num:%d,func:%s,data_type:%s,cfg%d,rx%d\r\n",
 //                              p_frame->p_data[cnt].rawdata,
 //                              p_frame->frame_cnt,
 //                              cnt,

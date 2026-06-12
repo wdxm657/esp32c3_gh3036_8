@@ -103,7 +103,7 @@ void gh_protocol_data_send(void *data, int size)
     }
 
     // TODO: Replace with actual BLE/UART/Wi-Fi transport send function.
-    ESP_LOGI(TAG, "protocol tx pending transport, len=%d", size);
+    // ESP_LOGI(TAG, "protocol tx pending transport, len=%d", size);
 }
 
 void gh_protocol_init(void)

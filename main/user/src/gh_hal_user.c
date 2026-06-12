@@ -372,7 +372,7 @@ uint32_t gh_hal_isr_event_publish(gh_hal_isr_status_t *p_event)
         if (0 != ((*p_payload >> i) & 0x1))
         {
             /* Just for debug */
-            GH_LOG_LVL_DEBUG("[%s] %s \r\n", __FUNCTION__, g_isr_event_name[i]);
+            // GH_LOG_LVL_DEBUG("[%s] %s \r\n", __FUNCTION__, g_isr_event_name[i]);
         }
     }
 
